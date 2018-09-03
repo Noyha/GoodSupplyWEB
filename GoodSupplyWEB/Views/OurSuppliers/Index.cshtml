@@ -1,0 +1,56 @@
+﻿@model IEnumerable<GoodSupplyWEB.ViewModels.ThumbnailSuppliersBoxViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .col-md-3 {
+        float:right;
+    }
+
+    .col-md-2 {
+        float: right;
+    }
+</style>
+
+<div class="dir-rtl">
+    @*<h2>הספקים שלנו</h2>
+    <hr />*@
+
+    @*adding form for search button*@
+    @using (Html.BeginForm("Index", "OurSuppliers", FormMethod.Get))
+    {
+        <br />
+        <div class="row">
+            <div class="text-left pull-left">
+                <b style="color:#e95420">חיפוש לפי :</b>&nbsp;
+                <label class="radio-inline">
+                    @Html.RadioButton("option", "SupplierBusinessName")<b style="color:black; font-size:small; margin-right: 15px;">שם</b>&nbsp;
+                    @Html.RadioButton("option", "SupplierBusinessAddress")<b style="color:black; font-size:small; margin-right: 15px;">כתובת</b>
+                </label>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="pull-left">
+                <button type="submit" value="Search" class="btn btn-sm btn-primary">
+                    חיפוש&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+            <div class="pull-left">
+                @Html.Editor("search", new { htmlAttributes = new { @class = "form-control input-sm" } })
+            </div>
+        </div>
+        <br />
+        <br />
+    }
+
+    <div class="row">
+        @foreach (var area in Model)
+        {
+            @Html.Partial("_ThumbnailSupplierPartial", area)
+        }
+    </div>
+
+</div>
+

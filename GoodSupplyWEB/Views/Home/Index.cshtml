@@ -1,0 +1,281 @@
+﻿@model IEnumerable<GoodSupplyWEB.ViewModels.ThumbnailProductsBoxViewModel>
+@{
+    ViewBag.Title = "דף הבית";
+}
+
+<style>
+
+    body {
+    }
+
+    p {
+    }
+
+    a,
+    a:hover,
+    a:focus {
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .col-md-3 {
+        float: right;
+        /*margin-right:10px;*/
+    }
+
+    .col-md-2 {
+        float: right;
+    }
+
+
+    /*.navbar {
+        padding: 15px 10px;
+        background: #fff;
+        border: none;
+        border-radius: 0;
+        margin-bottom: 40px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }*/
+
+    .navbar-btn {
+        box-shadow: none;
+        outline: none !important;
+        border: none;
+    }
+
+    .line {
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px dashed #ddd;
+        margin: 40px 0;
+    }
+
+    .wrapper {
+        display: flex;
+        align-items: stretch;
+    }
+
+    #sidebar {
+        min-width: 250px;
+        max-width: 250px;
+        background: #aea79f;
+        color: #fff;
+        transition: all 0.3s;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        /*height: 100vh;*/
+        margin-left: 15px;
+    }
+
+        #sidebar a,
+        #sidebar a:hover,
+        #sidebar a:focus {
+            color: inherit;
+        }
+
+        #sidebar.myactiv {
+            margin-right: -250px;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #8e8984;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+            border-bottom: 1px solid #808080;
+        }
+
+        #sidebar ul p {
+            color: #fff;
+            padding: 10px;
+        }
+
+        #sidebar ul li a {
+            padding: 10px;
+            font-size: 1.1em;
+            display: block;
+        }
+
+            #sidebar ul li a:hover {
+                color: #808080;
+                background: #fff;
+            }
+
+        #sidebar ul li.myactiv > a,
+        a[aria-expanded="true"] {
+            color: #fff;
+            background: #aea79f;
+        }
+
+    a[data-toggle="collapse"] {
+        position: relative;
+    }
+
+    a[aria-expanded="false"]::before,
+    a[aria-expanded="true"]::before {
+        content: '\e259';
+        display: block;
+        position: absolute;
+        left: 20px;
+        font-family: 'Glyphicons Halflings';
+        font-size: 0.6em;
+    }
+
+    a[aria-expanded="true"]::before {
+        content: '\e260';
+    }
+
+    ul ul a {
+        font-size: 0.9em !important;
+        padding-right: 30px !important;
+        background: #c4bcb2;
+    }
+
+    ul.CTAs {
+        padding: 20px;
+    }
+
+        ul.CTAs a {
+            text-align: center;
+            font-size: 0.9em !important;
+            display: block;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+    a.download {
+        background: #fff;
+        color: #7386D5;
+    }
+
+    a.article,
+    a.article:hover {
+        background: #8e8984 !important;
+        color: #fff !important;
+    }
+
+    #content {
+        padding: 20px;
+        min-height: 100vh;
+        transition: all 0.3s;
+    }
+
+        #content p a {
+            color: black;
+        }
+
+    @@media (max-width: 768px) {
+        #sidebar {
+            margin-right: -250px;
+        }
+
+            #sidebar.myactiv {
+                margin-right: 0;
+            }
+
+        #sidebarCollapse span {
+            display: none;
+        }
+    }
+</style>
+
+<div class="dir-rtl">
+
+    @*adding form for search button*@
+    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+    {
+        <br />
+        <div class="row">
+            <div class="text-left pull-left">
+                <b style="color:#e95420">חיפוש לפי :</b>&nbsp;
+                <label class="radio-inline">
+                    @Html.RadioButton("option", "ProductName")<span style="color:black; font-size:small; margin-right: 15px;">שם מוצר</span>&nbsp;
+                    @Html.RadioButton("option", "CatalogNumber")<span style="color:black; font-size:small; margin-right: 15px;">מס' קטלוגי</span>
+                </label>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="pull-left">
+                <button type="submit" value="Search" class="btn btn-sm btn-primary">
+                    חיפוש&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+            <div class="pull-left">
+                @Html.Editor("search", new { htmlAttributes = new { @class = "form-control input-sm" } })
+            </div>
+        </div>
+
+        <br />
+    }
+
+    <hr />
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>קטגוריות</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="myactiv">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">מוצרי חלב</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li><a href="#">חלב</a></li>
+                        <li><a href="#">גבינות</a></li>
+                        <li><a href="#">מעדנים</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">בשרים</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">שתייה</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li><a href="#">מוגז</a></li>
+                        <li><a href="#">קפה</a></li>
+                        <li><a href="#">טבעי</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">קפואים</a>
+                </li>
+                <li>
+                    <a href="#">חטיפים וממתקים</a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <li><a href="@Url.Action("ShowProducts", "Home")" class="article">חזרה למוצרים</a></li>
+            </ul>
+        </nav>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                <i class="glyphicon glyphicon-align-right"></i>
+                <span>סגור את הקטגוריות</span>
+            </button>
+
+            <div class="row">
+                @foreach (var area in Model)
+                {
+                    @Html.Partial("_ThumbnailProductPartial", area)
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#sidebarCollapse").on("click", function () {
+                $("#sidebar").toggleClass("myactiv");
+                //$(this).toggleClass("myactiv");
+            });
+        });
+    </script>
+}

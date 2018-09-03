@@ -1,0 +1,14 @@
+﻿<li class="dropdown" data-user-menu>
+    <a href="#">
+        <span class="glyphicon glyphicon-user"></span>
+        @Session["FirstName"]
+    </a>
+    <ul class="dropdown-menu dir-rtl">
+        <li class="divider"></li>
+        <li><a href="@Url.Action("ClientLoggedIn","Account", new { id = Session["UserId"] })">הפרופיל שלי</a></li>
+        <li><a href="@Url.Action("MyOrders","Order", new { id = Session["UserId"] })">ההזמנות שלי</a></li>
+        <li class="divider"></li>
+        <li><a href="@Url.Action("Logout","Account", new { id = Session["UserId"] })">התנתק</a></li>
+        <li class="divider"></li>
+    </ul>
+</li>

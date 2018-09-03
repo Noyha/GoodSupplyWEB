@@ -1,0 +1,117 @@
+﻿body {
+    background-image: url(../Content/Images/iStock-492546162-brighter.png);
+    background-repeat: repeat;
+    background-size: cover;
+    background-position: top;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #033b72;
+    color: #fff;
+}
+
+    .footer > .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+#sidenav {
+    min-width: 250px;
+    max-width: 250px;
+}
+
+.side-menu {
+    width: 100%;
+    list-style-type: none;
+    display: block;
+    padding: 0;
+}
+
+    .side-menu > li {
+        min-height: 30px;
+        width: 100%;
+        display: block;
+        color: white;
+        font-size: 1.1em;
+    }
+
+    .side-menu > li > a {
+        color: white;
+    }
+
+    .side-menu li > div {
+        height: 30px;
+        width: 100%;
+        display: block;
+        cursor: pointer;
+        color: white;
+    }
+
+    .side-menu ul {
+        width: 100%;
+        list-style-type: none;
+        display: none;
+        overflow: hidden;
+        color: white;
+    }
+
+    .side-menu > li > ul > li {
+        padding-right: 5px;
+        width: 100%;
+        min-height: 30px;
+        display: block;
+        color: white;
+        background-color: #e84b17;
+        font-size: 0.9em !important;
+        padding-right: 30px !important;
+    }
+
+    .side-menu > li > ul > li > a {
+        color: white;
+    }
+
+        .side-menu > li > ul > li > ul > li {
+            padding-right: 0;
+            width: 100%;
+            min-height: 30px;
+            display: block;
+            background-color: hsla(15, 82%, 45%,0.4);
+            color: white;
+        }
+
+        .side-menu > li > ul > li > ul > li > a{
+            color: white;
+        }
+
+.side-headear {
+    width: 100%;
+    display: block;
+    padding: 20px;
+    background-color: #ba3c12;
+    color: white;
+    margin-bottom: 10px;
+}

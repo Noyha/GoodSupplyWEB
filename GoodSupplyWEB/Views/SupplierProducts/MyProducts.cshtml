@@ -1,0 +1,116 @@
+﻿@model IEnumerable<GoodSupplyWEB.Models.DB.Prices>
+
+@{
+    ViewBag.Title = "המוצרים שלי";
+}
+
+<style>
+    th {
+        text-align: right;
+    }
+</style>
+
+<div class="dir-rtl">
+
+    @*adding form for search button*@
+    @using (Html.BeginForm("MyProducts", "SupplierProducts", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="text-left pull-left">
+                <b style="color:#e95420">חיפוש לפי :</b>&nbsp;
+                <label class="radio-inline">
+                    @Html.RadioButton("option", "ProductName")<b style="color:black; font-size:small; margin-right: 15px;">שם מוצר</b>&nbsp;
+                    @Html.RadioButton("option", "ManufacturerName")<b style="color:black; font-size:small; margin-right: 15px;">שם יצרן</b>
+                </label>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="pull-left">
+                <button type="submit" value="Search" class="btn btn-sm btn-primary">
+                    חיפוש&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+            <div class="pull-left">
+                @Html.Editor("search", new { htmlAttributes = new { @class = "form-control input-sm" } })
+            </div>
+        </div>
+    }
+
+    <br />
+
+    <div class="well well-sm" style="background-color:hsla(15, 82%, 45%,0.8); color: white;">
+        <h2>המוצרים שלי</h2>
+        <hr />
+
+        <a type="button" class="btn btn-primary btn-sm" href="@Url.Action("ShowItems", new { id = Session["UserId"] })">
+            <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;
+            <span>הוסף מוצרים</span>
+        </a>
+        <br />
+        <br />
+
+        <table class="table">
+            <tr>
+                <th>
+                    מוצר
+                </th>
+                <th>
+                    יצרן
+                    @*@Html.DisplayNameFor(model => model.ManufacturerProducts.Manufacturers.Name)*@
+                </th>
+                <th>
+                    מחיר
+                    @*@Html.DisplayNameFor(model => model.ProductPrice)*@
+                </th>
+                <th>
+                    כמות
+                    @*@Html.DisplayNameFor(model => model.Quantity)*@
+                </th>
+                <th>
+                    מחיר יצרן(אופציונלי)
+                    @*@Html.DisplayNameFor(model => model.ManufacturerPrice)*@
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Suppliers.FirstName)
+                    </th>*@
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerProducts.Products.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerProducts.Manufacturers.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturerPrice)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Suppliers.FirstName)
+                        </td>*@
+                    <td>
+                        <a type="button" class="btn btn-primary btn-sm" href="@Url.Action("EditProduct", new { id = item.Id })">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span>ערוך</span>
+                        </a>
+                        <a type="button" class="btn btn-danger btn-sm" href="@Url.Action("DeleteProduct", new { id = item.Id })">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            <span>מחק</span>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

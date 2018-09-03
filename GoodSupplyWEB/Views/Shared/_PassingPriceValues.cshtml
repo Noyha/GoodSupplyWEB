@@ -1,0 +1,11 @@
+﻿@model GoodSupplyWEB.Models.ThumbnailModel
+
+@using (Html.BeginForm("AcceptPriceValues", "SupplierProducts", FormMethod.Post))
+{
+    <h5 style="font-weight: bold">מחיר: <input type="number" id="ProductPrice" name="Prices.ProductPrice" style="width: 60px;"></h5>
+    <h5 style="font-weight: bold">כמות: <input type="number" id="Quantity" name="Prices.Quantity" style="width: 60px;"></h5>
+    <input type="hidden" name="Prices.ManufacturerProductId" value="@Model.ManufacturerProductId" />
+    <input type="hidden" name="Prices.ManufacturerProducts" value="@Model.ManufacturerProducts" />
+    <input type="hidden" name="Prices.Suppliers" value="@Model.Suppliers" />
+    <input type="submit" value="הוסף מוצר" class="btn btn-sm btn-success" />
+}

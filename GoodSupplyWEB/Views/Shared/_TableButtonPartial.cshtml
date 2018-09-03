@@ -1,0 +1,43 @@
+﻿@model GoodSupplyWEB.Models.IndividualButtonPartial
+@using GoodSupplyWEB.Models
+
+<td style="width:400px;">
+    <div class="btn-group" role="group">
+        @Html.Partial("_IndividualButtonPartial",
+                     new IndividualButtonPartial
+                     {
+                         Action = "Edit",
+                         ButtonType = "btn-primary",
+                         Glyph = "pencil",
+                         Text = "Edit",
+                         MainCategoryId = Model.MainCategoryId,
+                         SubCategoryId = Model.SubCategoryId,
+                         ProductId = Model.ProductId,
+                         UserId = Model.UserId
+                     })
+        @Html.Partial("_IndividualButtonPartial",
+                     new IndividualButtonPartial
+                     {
+                         Action = "Details",
+                         ButtonType = "btn-success",
+                         Glyph = "list",
+                         Text = "Details",
+                         MainCategoryId = Model.MainCategoryId,
+                         SubCategoryId = Model.SubCategoryId,
+                         ProductId = Model.ProductId,
+                         UserId = Model.UserId
+                     })
+        @Html.Partial("_IndividualButtonPartial",
+                     new IndividualButtonPartial
+                     {
+                         Action = "Delete",
+                         ButtonType = "btn-danger",
+                         Glyph = "trash",
+                         Text = "Delete",
+                         MainCategoryId = Model.MainCategoryId,
+                         SubCategoryId = Model.SubCategoryId,
+                         ProductId = Model.ProductId,
+                         UserId = Model.UserId
+                     })
+    </div>
+</td>

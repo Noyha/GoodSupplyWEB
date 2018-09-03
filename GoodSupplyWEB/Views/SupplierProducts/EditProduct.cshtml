@@ -1,0 +1,71 @@
+﻿@model GoodSupplyWEB.ViewModels.PriceViewModel
+@{
+    ViewBag.Title = "EditProduct";
+}
+
+<div class="dir-rtl">
+    <div class="well well-sm" style="background-color:hsla(15, 82%, 45%,0.8); color: white;">
+        <h2>ערוך מוצר</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Prices.Id)
+                @Html.HiddenFor(model => model.Prices.SupplierId)
+                @Html.HiddenFor(model => model.Prices.ManufacturerProductId)
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.Prices.SupplierId, "SupplierId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Prices.SupplierId, new SelectList(Model.Suppliers, "Id", "FirstName"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Prices.SupplierId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Prices.ManufacturerProductId, "ManufacturerProductId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Prices.ManufacturerProductId, new SelectList(Model.ManufacturerProducts, "Id", "Name"), new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Prices.ManufacturerProductId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prices.ProductPrice, "מחיר המוצר", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Prices.ProductPrice, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Prices.ProductPrice, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prices.Quantity, "כמות", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Prices.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Prices.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prices.ManufacturerPrice, "מחיר יצרן", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Prices.ManufacturerPrice, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Prices.ManufacturerPrice, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="שמור" class="btn btn-sm btn-success" />
+                <a type="button" class="btn btn-info btn-sm" href="@Url.Action("MyProducts", new { id = Model.Prices.SupplierId})">
+                    <span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;
+                    <span>בחזרה למוצרים שלי</span>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+

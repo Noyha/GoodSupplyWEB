@@ -1,0 +1,89 @@
+﻿@model IEnumerable<GoodSupplyWEB.Models.DB.Suppliers>
+
+@{
+    ViewBag.Title = "IndexSuppliers";
+}
+
+<style>
+    th {
+        text-align: right;
+    }
+</style>
+
+<div class="dir-rtl">
+    <h2>IndexSuppliers</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusinessName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusinessAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VATIdNumber)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusinessName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusinessAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VATIdNumber)
+                </td>
+                <td>
+                    @Html.ActionLink("ערוך", "SupplierEdit", new { id = item.Id }) |
+                    @Html.ActionLink("מחק", "SupplierDelete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

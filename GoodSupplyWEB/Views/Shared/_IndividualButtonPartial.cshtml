@@ -1,0 +1,6 @@
+﻿@model GoodSupplyWEB.Models.IndividualButtonPartial
+
+<a type="button" class="@Model.ButtonType  btn btn-sm" href="@Url.Action(Model.Action)@Model.ActionParameter">
+    <span class="glyphicon glyphicon-@Model.Glyph"></span>
+    @*<span>@Model.Text</span>*@
+</a>

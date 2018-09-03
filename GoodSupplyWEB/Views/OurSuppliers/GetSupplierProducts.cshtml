@@ -1,0 +1,87 @@
+﻿@model IEnumerable<GoodSupplyWEB.Models.ThumbnailProductsModel>
+@{
+    ViewBag.Title = "GetSupplierProducts";
+}
+
+<style>
+    .col-md-3 {
+        float: right;
+    }
+
+    .col-md-2 {
+        float: right;
+    }
+</style>
+
+<div class="dir-rtl">
+
+    @*adding form for search button*@
+    @using (Html.BeginForm("GetSupplierProducts", "OurSuppliers", FormMethod.Get))
+    {
+        <br />
+        <div class="row">
+            <div class="text-left pull-left">
+                <b style="color:#e95420">חיפוש לפי :</b>&nbsp;
+                <label class="radio-inline">
+                    @Html.RadioButton("option", "ProductName")<b style="color:black; font-size:small; margin-right: 15px;">מוצר</b>&nbsp;
+                    @Html.RadioButton("option", "CatalogNumber")<b style="color:black; font-size:small; margin-right: 15px;">מס' קטלוגי</b>
+                </label>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="pull-left">
+                <button type="submit" value="Search" class="btn btn-sm btn-primary">
+                    חיפוש&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+            <div class="pull-left">
+                @Html.Editor("search", new { htmlAttributes = new { @class = "form-control input-sm" } })
+            </div>
+        </div>
+
+        <br />
+    }
+
+    <div class="row">
+        @foreach (var thumbnail in Model)
+        {
+            <div class="col-xs-6 col-md-3">
+                <div class="thumbnail" style="height:470px; width:250px;">
+                    <div class="thumbnail-img-container">
+                        <a href="@thumbnail.Link"><img src="@thumbnail.ImageUrl" class="thumbnail-img" alt="" style="width:200px; height:200px;"/></a>
+                    </div>
+                    <div class="caption" style="text-align:right">
+                        <h3><a href="@thumbnail.Link">@thumbnail.ProductName @thumbnail.CommerciallName</a></h3>
+                        <h5>@thumbnail.ManufacturerName | @thumbnail.PackageQuantity יח'</h5>
+                        <h5 style="color:grey">מק"ט: @thumbnail.CatalogNumber</h5>
+                        <h3>מחיר: @string.Format("{0:0.00}", @thumbnail.ProductPrice)</h3>
+
+                        @if (Session["loginSuccess"] != null && (string)Session["UserType"] == "Client")
+                        {
+                            using (Html.BeginForm("AddToOrder", "Order", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <span>כמות:&nbsp;</span><input type="number" name="Quantity" style="width:60px" /><br />
+                                <input type="hidden" name="ClientId" value="@Session["UserID"]" />
+                                <input type="hidden" name="SupplierId" value="@ViewBag.SupplierIdForOrder" />
+                                <input type="hidden" name="ManufacturerProductId" value="@thumbnail.ProductId" />
+                                <input type="hidden" name="ProductPrice" value="@thumbnail.ProductPrice" />
+                                <input type="hidden" name="PackageQuantity" value="@thumbnail.PackageQuantity" />
+                                <br />
+                                <input @*id="add"*@ type="submit" value="הוסף" class="btn btn-sm btn-primary"/>
+                            }
+                        }
+                        else
+                        {
+                            <span>התחבר כלקוח על מנת להזמין&nbsp;&nbsp;</span>
+                        }
+                        @*<h5><a href="@thumbnail.Link" style="text-decoration:underline; font-weight: bold;">להשוואת מחירים לחץ כאן</a></h5>*@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+

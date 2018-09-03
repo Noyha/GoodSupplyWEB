@@ -1,0 +1,25 @@
+﻿@model GoodSupplyWEB.ViewModels.ThumbnailProductsBoxViewModel
+
+<div class="row">
+
+    @if (Model.ProductsThumbnails != null)
+    {
+        foreach (var thumbnail in Model.ProductsThumbnails)
+        {
+            <div class="col-xs-6 col-md-3">
+                <div class="thumbnail">
+                    <div class="thumbnail-img-container">
+                        <img src="@thumbnail.ImageUrl" class="thumbnail-img" alt="" />
+                    </div>
+                    <div class="caption" style="text-align:right">
+                        <h3>@thumbnail.ProductName @thumbnail.CommerciallName</h3>
+                        <h5>@thumbnail.ManufacturerName | @thumbnail.PackageQuantity יח'</h5>
+                        <h5 style="color:grey">מק"ט: @thumbnail.CatalogNumber</h5>
+                        <h3>מחיר: @thumbnail.ProductPrice</h3>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>

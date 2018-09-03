@@ -1,0 +1,87 @@
+﻿@model IEnumerable<GoodSupplyWEB.Models.DB.Orders>
+@{
+    ViewBag.Title = "SetByCity";
+    int num = 0;
+    string date = "";
+}
+
+<style>
+    th {
+        text-align: right;
+    }
+</style>
+
+<div class="dir-rtl">
+    <div class="well well-sm" style="background-color:hsla(15, 82%, 45%,0.8); color: white;">
+        <h2>בחר עדיפות להזמנות לפי ערים</h2>
+        <br />
+
+        @using (Html.BeginForm("SetOrdersPosition", "BinPacking", FormMethod.Post))
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        מס' הזמנה
+                    </th>
+                    <th>
+                        שם הלקוח
+                    </th>
+                    <th>
+                        איזור גיאוגרפי
+                    </th>
+                    @*<th>
+                        תאריך יצירה
+                    </th>
+                    <th>
+                        תאריך תשלום
+                    </th>*@
+                    <th>
+                        הנחה
+                    </th>
+                    <th>
+                        מחיר סופי
+                    </th>
+                    <th>סדר לפי הזמנה (1 עד @Model.Count())</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Clients.BusinessName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Clients.BusinessAddress)
+                        </td>
+                        <td>
+                            @(date = item.CreateDate.HasValue ? item.CreateDate.Value.ToString("dd.MM.yyy") : "<not available>")
+                            @*@Html.DisplayFor(modelItem => item.CreateDate)*@
+                        </td>
+                        <td>
+                            @(date = item.PayDate.HasValue ? item.PayDate.Value.ToString("dd.MM.yyy") : "<עוד לא שולם>")
+                            @*@Html.DisplayFor(modelItem => item.PayDate)*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Discount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalPrice)
+                        </td>
+                        <td>
+                            <input type="hidden" name="[@num].Id" value="@item.Id">
+                            <input type="number" name="[@num].Position" min="1" max="@Model.Count()" style="color:black">
+                        </td>
+                    </tr>
+                    num++;
+                }
+                <tr>
+                    <td><input type="submit" value="שלח" class="btn btn-sm btn-primary" /></td>
+                </tr>                
+            </table>
+            @*<h4>@DateTime.Now.ToString("dd.MM.yyy")</h4>*@
+        }
+    </div>
+</div>

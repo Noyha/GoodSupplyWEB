@@ -1,0 +1,195 @@
+﻿@model IEnumerable<GoodSupplyWEB.Models.DB.Orders>
+@{
+    ViewBag.Title = "MyOrders";
+    string date = "";
+}
+
+<style>
+    th {
+        text-align: right;
+    }
+</style>
+
+<div class="dir-rtl">
+    <div class="well well-sm" style="background-color:hsla(15, 82%, 45%,0.8); color: white;">
+        <h2>ההזמנות שלי</h2>
+
+        <table class="table">
+            <tr>
+                <th>
+                    הזמנה מס'
+                </th>
+                <th>
+                    @if ((string)Session["UserType"] == "Client")
+                    {
+                        <span>שם הספק</span>
+                    }
+                    else
+                    {
+                        <span>שם הלקוח</span>
+                    }
+                </th>
+                <th>
+                    תאריך יצירה
+                </th>
+                <th>
+                    תאריך תשלום
+                </th>
+                <th>
+                    סכום ההזמנה
+                </th>
+                <th>
+                    אישור לקוח
+                </th>
+                <th>
+                    אישור ספק
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @if ((string)Session["UserType"] == "Client")
+                        {
+                            @Html.DisplayFor(modelItem => item.Suppliers.BusinessName)
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Clients.BusinessName)
+                        }
+                    </td>
+                    <td>
+                        @(date = item.CreateDate.HasValue ? item.CreateDate.Value.ToString("dd.MM.yyy") : "<not available>")
+                    </td>
+                    <td>
+                        @(date = item.PayDate.HasValue ? item.PayDate.Value.ToString("dd.MM.yyy") : "<עוד לא שולם>")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                        @if (ViewBag.discount != null)
+                        {
+                            <b>@ViewBag.discount</b>
+                        }
+
+                        @*@if (Session["orderDiscount"] != null)
+                            {
+                                <b>@Session["orderDiscount"]</b>
+                            }*@
+                    </td>
+                    <td>
+                        @if ((string)Session["UserType"] == "Client")
+                        {
+                            if (item.ClientApproval == 1)
+                            {
+                                <b style="color:#000000">אישרת הזמנה</b>
+                            }
+                            else
+                            {
+                                using (Html.BeginForm("ApproveOrderClient", "Order", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="Id" value="@item.Id" />
+                                    <input type="submit" value="אשר הזמנה" class="btn btn-sm btn-success"/>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (item.ClientApproval == 1)
+                            {
+                                <b style="color:#000000">הזמנה אושרה</b>
+                            }
+                            else
+                            {
+                                <span>הלקוח טרם אישר את ההזמנה</span>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @if ((string)Session["UserType"] == "Supplier")
+                        {
+                            if (item.ClientApproval == 1 && item.SupplierApproval == 0)
+                            {
+                                using (Html.BeginForm("ApproveOrderSupplier", "Order", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="Id" value="@item.Id" />
+                                    <span>אחוזי הנחה:&nbsp;</span><input type="number" name="Discount" style="width:40px; color:black;" />
+                                    <input type="submit" value="אשר הזמנה" class="btn btn-sm btn-success" style="margin-right:10px" />
+                                }
+                            }
+                            else if (item.ClientApproval == 1 && item.SupplierApproval == 1)
+                            {
+                                <b style="color:#000000">אישרת הזמנה</b>
+                            }
+                        }
+                        else
+                        {
+                            if (item.ClientApproval == 1 && item.SupplierApproval == 1)
+                            {
+                                <b style="color:#000000">הזמנה אושרה</b>
+                            }
+                            else if (item.ClientApproval == 1 && item.SupplierApproval == 0)
+                            {
+                                <span>בהמתנה...</span>
+                            }
+                            else
+                            {
+                                <span>עליך לאשר הזמנה קודם לכן</span>
+                            }
+                        }
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-primary btn-sm" href="@Url.Action("OrderDetails", "OrderDetail", new { id = item.Id })">
+                            <span class="glyphicon glyphicon-th-list"></span>&nbsp;
+                            <span>פרטי הזמנה</span>
+                        </a>
+                    </td>
+                    <td>
+                        @if ((string)Session["UserType"] == "Client" && item.ClientApproval == 0)
+                        {
+                            <a type="button" class="btn btn-danger btn-sm" href="@Url.Action("DeleteOrder", "Order", new { id = item.Id })">
+                                <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                                <span>מחק הזמנה</span>
+                            </a>
+                        }
+                    </td>
+                    @*<td>
+                        @if ((string)Session["UserType"] == "Client" && item.ClientApproval == 1 && item.SupplierApproval == 1)
+                        {
+                            <span onclick="myFunction()">
+                                <input type="image" border="0"
+                                       src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif"
+                                       alt="Buy Now">
+                                <img alt="" border="0" width="1" height="1"
+                                     src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
+                            </span>
+                        }
+                    </td>*@
+                </tr>
+            }
+
+        </table>
+    </div>
+    @if ((string)Session["UserType"] == "Supplier")
+    {
+        <a type="button" class="btn btn-primary btn-sm" href="@Url.Action("SetByCity", "BinPacking", new { id = Session["UserId"] })">
+            <span class="glyphicon glyphicon-th-list"></span>&nbsp;
+            <span>סידור סחורה במשאית</span>
+        </a>
+    }
+
+</div>
+
+@section Scripts {
+    <script>
+        function myFunction() {
+            alert("תודה רבה שהזמנת אצלנו!");
+        }
+    </script>
+}

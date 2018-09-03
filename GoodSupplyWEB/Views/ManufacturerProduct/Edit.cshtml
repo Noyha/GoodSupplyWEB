@@ -1,0 +1,97 @@
+﻿@model GoodSupplyWEB.ViewModels.ManufacturerProductViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="dir-rtl">
+    <h2>עריכה</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>מוצרי יצרן</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ManufacturerProducts.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.ProductId, "שם מוצר", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.ManufacturerProducts.ProductId, new SelectList(Model.Products, "Id", "Name"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.ProductId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.ManufacturerId, "שם יצרן", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.ManufacturerProducts.ManufacturerId, new SelectList(Model.Manufacturers, "Id", "Name"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.ManufacturerId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ManufacturerProducts.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.CatalogNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ManufacturerProducts.CatalogNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.CatalogNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ManufacturerProducts.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.ImageUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.PackageQuantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ManufacturerProducts.PackageQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.PackageQuantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.Width, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ManufacturerProducts.Width, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.Width, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.Length, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ManufacturerProducts.Length, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.Length, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ManufacturerProducts.Height, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ManufacturerProducts.Height, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ManufacturerProducts.Height, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="submit" value="שמור" class="btn btn-sm btn-success" />
+            @Html.Partial("_BackToListButtonPartial")
+        </div>
+    }
+</div>

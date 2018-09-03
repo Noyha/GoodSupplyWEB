@@ -1,0 +1,91 @@
+﻿@model GoodSupplyWEB.ViewModels.ThumbnailSupplierProductsBoxViewModel
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<div class="row">
+
+    @if (Model.SupplierProductsThumbnails != null)
+    {
+        for (var i = 0; i < Model.SupplierProductsThumbnails.Count(); i++)
+        {
+            <div class="col-xs-6 col-md-3">
+                <div class="thumbnail">
+                    <div class="thumbnail-img-container">
+                        <img src="@thumbnail.ImageUrl" class="thumbnail-img" alt="" />
+                    </div>
+                    <div class="caption" style="text-align:right">
+                        <h3>@thumbnail.ProductName @thumbnail.CommerciallName</h3>
+                        <h5>@thumbnail.ManufacturerName | @thumbnail.PackageQuantity יח'</h5>
+                        <h5 style="color:grey">מק"ט: @thumbnail.CatalogNumber</h5>
+                        <a href="#" class="btn btn-info" onclick="AddNewPrice(0)">הוסף למוצרים שלי</a>
+
+                        <div class="modal fade" id="MyModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                                        <h4 id="ModalTitle"></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="form">
+                                            <fieldset id="SubmitForm">
+                                                @Html.HiddenFor(m => m[i])
+                                                <input type="hidden" name="@thumbnail.PriceId" id="PriceId" />
+
+                                                <input type="hidden" name="@thumbnail.SupplierId" id="SuppId" value="(int)@Session["UserId"]" />
+                                                @*@Html.Hidden("@thumbnail.SupplierId", new { @id = "StuId" })*@
+                                                <input type="hidden" name="@thumbnail.ProductId" id="ProId" value="@thumbnail.ProductId" />
+                                                <div class="form-group">
+                                                    מחיר: <input type="number" name="@thumbnail.ProductPrice" id="ProductPrice" style="width:60px" />
+                                                    @*@Html.TextBoxFor(m => m.StudentName, new { @id = "StuName", @class = "form-control", @placeholder = "Name*" })*@
+                                                </div>
+                                                <div class="form-group">
+                                                    כמות: <input type="number" name="@thumbnail.Quantity" id="Quantity" style="width:60px" />
+                                                    @*@Html.TextBoxFor(m => m.Email, new { @id = "Email", @class = "form-control", @placeholder = "Email*" })*@
+                                                </div>
+                                                <div class="form-group">
+                                                    <a href="#" class="btn btn-block btn-danger" id="SavePriceRecord">Save</a>
+                                                </div>
+
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+<script>
+    //Show The Popup Modal For Add New Price
+
+    function AddNewPrice(0) {
+        $("#form")[0].reset();
+        $("#PriceId").val(0);
+        $("#ModalTitle").html("הוסף מוצר");
+        $("#MyModal").modal();
+    }
+
+    $("#SavePriceRecord").click(function () {
+        var data = $("#SubmitForm").serialize();
+        $.ajax({
+            type: "Post",
+            Url: "/SupplierProducts/SaveProducts",
+            data: data,
+            success: function (result) {
+                alert("המוצר נוסף בהצלחה!");
+                window.location.href = "/SupplierProducts/AddProducts";
+                $("#MyModal").modal("hide");
+            }
+        })
+    })
+
+</script>
+

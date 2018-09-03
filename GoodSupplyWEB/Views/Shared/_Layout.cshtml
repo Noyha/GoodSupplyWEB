@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GoodSupplyApp</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .top-container {
+            /*background-color: #f1f1f1;*/
+            background-color: #ffffff;
+            padding: 10px;
+            padding-left: 20px;
+            padding-top: 20px;
+        }
+        .top-container > img {
+            float:left;
+            margin-right:20px;
+            width: 150px;
+            height: 95px;
+        }
+
+        .sticky {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            right: 0;
+            left: 0;
+            z-index: 1030;
+            border-width: 0 0 1px;
+            padding-left: 0;
+            padding-right: 0;
+            max-height: 340px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #d34615;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+            .footer > .container {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+        /*body {
+            background-image: url(../Content/Images/iStock-492546162.jpg);
+            background-repeat: repeat;
+            background-size: cover;
+            background-position: top;
+        }*/
+    </style>
+</head>
+<body> @*style="background-color:lightgrey"*@
+    <div class="top-container">
+        <img src="~/Content/Logo/new__logo(2).png" alt="" />
+        <h1>GoodSupply</h1>
+        <p>Easy. Fast. Comfortable connection between you and your suppliers</p>
+    </div>
+    
+    <div class="navbar navbar-inverse" id="myHeader">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("הספקים שלנו", "Index", "OurSuppliers")</li>
+                    <li>@Html.ActionLink("צור קשר", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("עלינו", "About", "Home")</li>
+                    <li>@Html.ActionLink("דף הבית", "ShowProducts", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left">
+                    @if (Session["loginSuccess"] != null)
+                    {
+                        if ((string)Session["UserType"] == "Client")
+                        {                                                        
+                            @Html.Partial("_ClientMenuPartial")
+                        }
+                        else
+                        {
+                            @Html.Partial("_SupplierMenuPartial")
+                        }
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("התחבר", "Login", "Account")</li>
+                        <li>@Html.ActionLink("הירשם", "SelectRegister", "Account")</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p style="padding-top:10px">&copy; GoodSupplyWEB - @DateTime.Now.Year</p>
+        </div>
+    </footer>
+    <script>
+        window.onscroll = function () { myFunction() };
+
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/goodSupplyJs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

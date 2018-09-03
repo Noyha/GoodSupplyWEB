@@ -1,0 +1,8 @@
+﻿@model int
+
+@*we use the EDIT button as partial view cus we are going to use it alot*@
+
+<a type="button" class="btn btn-primary btn-sm" href="@Url.Action("Edit", new { id = Model })">
+    <span class="glyphicon glyphicon-pencil"></span>
+    <span>ערוך</span>
+</a>

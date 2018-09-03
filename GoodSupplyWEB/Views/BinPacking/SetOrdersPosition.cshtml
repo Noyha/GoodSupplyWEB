@@ -1,0 +1,45 @@
+﻿@model IEnumerable<GoodSupplyWEB.Models.Package>
+@{
+    ViewBag.Title = "SetOrdersPosition";
+}
+
+<style>
+    th {
+        text-align: right;
+    }
+</style>
+
+<div class="dir-rtl">
+    <h1>תוצאות האלגוריתם</h1>
+
+    <div class="well well-sm" style="background-color:hsla(15, 82%, 45%,0.8); color: white;">
+        <h4>סידור הסחורה במשאית:</h4>
+        <br />
+
+        <table class="table">
+            <tr>
+                <th>מס' הזמנה</th>
+                <th>מס' מחיצה</th>
+                <th>מס' הבין במחיצה</th>
+                <th>מס' הבין מהרצפה לגובה המשאית</th>
+                <th>מס' מק"ט של מוצר</th>
+            </tr>
+            
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.orderId</td>
+                    <td>@item.newFrame</td>
+                    <td>@item.newBin</td>
+                    <td>@(item.binNum + 1)</td>
+                    <td>@item.CatalogNum</td>
+                </tr>
+            }
+
+        </table>
+        <a type="button" class="btn btn-info btn-sm" href="javascript: history.go(-1)">
+            <span class="glyphicon glyphicon-arrow-right"></span>&nbsp;&nbsp;
+            <span>חזור אחורה</span>
+        </a>
+    </div>
+</div>

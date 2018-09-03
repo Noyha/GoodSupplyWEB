@@ -1,0 +1,51 @@
+﻿@model GoodSupplyWEB.ViewModels.ThumbnailBoxViewModel
+@using GoodSupplyWEB.Models
+<div class="dir-rtl">
+
+    <div class="row">
+
+        @if (Model.Thumbnails != null)
+        {
+            foreach (var thumbnail in Model.Thumbnails)
+            {
+                @*if (thumbnail.Checked)
+                    {
+                        <script>
+                            $("#ProductPrice").fadeOut();
+                            $("#Quantity").fadeOut();
+                        </script>
+                    }*@
+
+                <div class="col-xs-6 col-md-3">
+                    <div class="thumbnail">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail-img-container">
+                                <img class="thumbnail-img" src="@thumbnail.ImageUrl" alt="" />
+                            </div>
+                        </div>
+                        <div class="caption" style="text-align:right">
+                            <h3>@thumbnail.ProductName</h3>
+                            <h5>@thumbnail.ManufacturerName | מק"ט: @thumbnail.CatalogNumber</h5>
+                            <h5 style="color:grey">כמות יח' במארז: @thumbnail.PackageQuantity</h5>
+                            <br />
+
+                            @Html.Partial("_PassingPriceValues", thumbnail)
+
+                            @*<h5 style="font-weight: bold">מחיר: <input type="number" id="ProductPrice" name="ProductPrice" style="width: 60px;"></h5>
+                                <h5 style="font-weight: bold">כמות: <input type="number" id="Quantity" name="Quantity" style="width: 60px;"></h5>*@
+                            @*<h5>מחיר יצרן: <input type="number" id="@thumbnail.ManufacturerPrice" style="width: 60px;"></h5>*@
+                            @*<input type="hidden" name="ImageUrl" value="@thumbnail.ImageUrl" />
+                                <input type="hidden" name="ProductName" value="@thumbnail.ProductName" />
+                                <input type="hidden" name="ManufacturerName" value="@thumbnail.ManufacturerName" />
+                                <input type="hidden" name="CatalogNumber" value="@thumbnail.CatalogNumber" />
+                                <input type="hidden" name="PackageQuantity" value="@thumbnail.PackageQuantity" />
+                                <input type="hidden" name="ManufacturerProductId" value="@thumbnail.ManufacturerProductId" />
+                                <input type="submit" value="הוסף מוצר" class="btn btn-sm btn-success" />*@
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+    </div>
+</div>

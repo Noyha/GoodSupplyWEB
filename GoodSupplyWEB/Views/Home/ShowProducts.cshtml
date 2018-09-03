@@ -1,0 +1,162 @@
+﻿@model IEnumerable<GoodSupplyWEB.Models.ThumbnailProductsModel>
+@using GoodSupplyWEB.Models.DB
+@{
+    ViewBag.Title = "דף הבית";
+}
+
+<style>
+    .col-md-3 {
+        float: right;
+    }
+
+    .col-md-9 {
+        float: right;
+    }
+
+    .article {
+        text-align: center;
+        color: white;
+        margin-bottom: 10px;
+    }
+</style>
+
+@*style="float:left; margin:0 0 0 20px"*@
+
+<div class="dir-rtl">
+
+    @*adding form for search button*@
+    @using (Html.BeginForm("ShowProducts", "Home", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="text-left pull-left">
+                <b style="color:#e95420">חיפוש לפי :</b>&nbsp;
+                <label class="radio-inline">
+                    @Html.RadioButton("option", "ProductName")<b style="color:black; font-size:small; margin-right: 15px;">שם מוצר</b>&nbsp;
+                    @Html.RadioButton("option", "ManufacturerName")<b style="color:black; font-size:small; margin-right: 15px;">שם יצרן</b>
+                </label>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="pull-left">
+                <button type="submit" value="Search" class="btn btn-sm btn-primary">
+                    חיפוש&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+            <div class="pull-left">
+                @Html.Editor("search", new { htmlAttributes = new { @class = "form-control input-sm" } })
+            </div>
+        </div>
+    }
+
+    <hr />
+
+    <div class="row">
+
+        <nav id="sidenav" class="col-md-3" style="background-color:#d34615; width:250px; border-radius: 4px;">
+            <div class="side-headear">
+                <h3>קטגוריות</h3>
+            </div>
+            <ul class="side-menu">
+                @foreach (var item in ViewBag.categories as IEnumerable<Categories>)
+                {
+                    <li>
+                        @if (item.Childrens.Any())
+                        {
+                            <div>
+                                @item.Name
+                                <span style="float:left; margin:0 0 0 20px" class="glyphicon glyphicon-circle-arrow-down"></span>
+                            </div>
+                            <ul>
+                                @foreach (var child in item.Childrens)
+                                {
+                                    <li>
+                                        @if (child.Childrens.Any())
+                                        {
+                                            <div>
+                                                @child.Name
+                                                <span style="float:left" class="glyphicon glyphicon-chevron-down"></span>
+                                            </div>
+                                            <ul>
+                                                @foreach (var innerChild in child.Childrens)
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action("ShowProducts", "Home", new { id = innerChild.Id })">
+                                                            @innerChild.Name
+                                                        </a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("ShowProducts", "Home", new { id = child.Id })">
+                                                @child.Name
+                                            </a>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("ShowProducts", "Home", new { id = item.Id })"> @item.Name</a>
+                        }
+                    </li>
+                }
+            </ul>
+            <hr />
+            <a class="article" href="/Home/ShowProducts">
+                <span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;
+                בחזרה למוצרים
+            </a>
+            <br />
+            <br />
+        </nav>
+
+
+        <div class="col-md-9">
+            @foreach (var thumbnail in Model)
+            {
+                <div class="col-xs-6 col-md-3">
+                    <div class="thumbnail" style="height:420px; width:200px;">
+                        <div class="thumbnail-img-container">
+                            <a href="@thumbnail.Link"><img src="@thumbnail.ImageUrl" class="thumbnail-img" alt="" style="width:200px; height:200px;" /></a>
+                        </div>
+                        <div class="caption" style="text-align:right">
+                            <h3><a href="@thumbnail.Link">@thumbnail.ProductName @thumbnail.CommerciallName</a></h3>
+                            <h5>@thumbnail.ManufacturerName | @thumbnail.PackageQuantity יח'</h5>
+                            <h5 style="color:grey">מק"ט: @thumbnail.CatalogNumber</h5>
+                            <a id="add" href="@thumbnail.Link" class="btn btn-sm btn-primary" role="button"><span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;להשוואת מחירים</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        //function myFunction() {
+        //    var x = document.getElementById("myDIV");
+        //    if (x.style.display === "none") {
+        //        x.style.display = "block";
+        //    } else {
+        //        x.style.display = "none";
+        //    }
+        //}
+
+        $(function () {
+            $(".side-menu li > div").on("click", function () {
+                //var childs = $(this).children();
+                var el = $(this).next();
+                if (el) {
+                    el.slideToggle();
+                }
+            });
+        })
+    </script>
+}
+

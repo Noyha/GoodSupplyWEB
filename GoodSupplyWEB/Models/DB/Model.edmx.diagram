@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a83258500e2b4ab6b630774feca0f384" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="Model.Categories" Width="1.5" PointX="0.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Manufacturers" Width="1.5" PointX="3.125" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.OrderDetails" Width="2" PointX="3.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Products" Width="1.625" PointX="5.625" PointY="8.5" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Categories_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Products_Categories" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.Clients" Width="1.5" PointX="6.375" PointY="0.625" />
+        <EntityTypeShape EntityType="Model.Suppliers" Width="1.5" PointX="4" PointY="0.625" />
+        <EntityTypeShape EntityType="Model.ManufacturerProducts" Width="1.5" PointX="0.625" PointY="9.625" />
+        <EntityTypeShape EntityType="Model.Prices" Width="2.125" PointX="5.625" PointY="10.75" />
+        <AssociationConnector Association="Model.FK_ManufacturerProducts_Manufacturers" />
+        <AssociationConnector Association="Model.FK_ManufacturerProducts_Products" />
+        <AssociationConnector Association="Model.FK_OrderDetails_ManufacturerProducts" />
+        <AssociationConnector Association="Model.FK_Prices_ManufacturerProducts" />
+        <AssociationConnector Association="Model.FK_Prices_Suppliers" />
+        <EntityTypeShape EntityType="Model.Orders" Width="1.5" PointX="0.5" PointY="4.125" />
+        <AssociationConnector Association="Model.FK_Orders_Clients" />
+        <AssociationConnector Association="Model.FK_OrderDetails_Orders" />
+        <AssociationConnector Association="Model.FK_Orders_Suppliers" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

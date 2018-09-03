@@ -1,0 +1,128 @@
+﻿@model GoodSupplyWEB.ViewModels.ProductOrderViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    th {
+        text-align: right;
+    }
+</style>
+
+<div class="dir-rtl">
+
+    <div class="row">
+
+        @* השוואת מחירים *@
+        <div class="col-sm-9 price-comparison">
+            <div class="well well-sm" style="background-color:hsla(15, 82%, 45%,0.8); color: white;">
+                <table class="table">
+                    <tr>
+                        <th>ספק</th>
+                        <th>מחיר</th>
+                        <th>כמות</th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model.PricesList)
+                    {
+                        <tr>
+                            <td>@item.Suppliers.BusinessName</td>
+                            <td>@string.Format("{0:0.00}", @item.ProductPrice)</td>
+                            <td>
+                                @if (Model.ClientId != 0)
+                                {
+                                    using (Html.BeginForm("AddToOrder", "Order"))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="number" name="Quantity" style="width:60px; color:black;" />
+                                        <input type="hidden" name="ClientId" value="@Model.ClientId" />
+                                        <input type="hidden" name="ManufacturerProductId" value="@item.ManufacturerProductId" />
+                                        <input type="hidden" name="ProductPrice" value="@item.ProductPrice" />
+                                        <input type="hidden" name="SupplierId" value="@item.SupplierId" />
+                                        <input type="hidden" name="PackageQuantity" value="@item.ManufacturerProducts.PackageQuantity" />
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;הוסף
+                                        </button>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>התחבר כלקוח על מנת להזמין&nbsp;&nbsp;</span>
+                                }
+                            </td>
+                            <td>
+                                @*<a style="float:left" type="button" class="btn btn-info btn-sm" href="@Url.Action("SupplierDetails", "OurSuppliers", new { id = item.SupplierId})">
+                                        <span>פרטים נוספים על הספק</span>
+                                    </a>*@
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        @* תמונה ופרטי המוצר *@
+        <div class="col-sm-3 content-book-product-details">
+
+            <img class="thumbnail-img" src="@Model.ImageUrl" alt="" style="width:230px; height:230px; margin:0px 16px 20px 0px; border: 1px solid hsla(15, 82%, 45%,0.8);" />
+
+            <div class="form-control" style="height:auto; border-color:hsla(15, 82%, 45%,0.8);">
+
+                <h4 class="product-details-heading">פרטי המוצר</h4>
+
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(m => m.ProductName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(m => m.ProductName)<br />
+                        "@(Html.DisplayFor(m => m.CommercialName))"
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(m => m.ManufacturerName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(m => m.ManufacturerName)
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(m => m.CatalogNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(m => m.CatalogNumber)
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(m => m.PackageQuantity)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(m => m.PackageQuantity)
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>
+                        מימדי המוצר
+                    </dt>
+                    <dd>
+                        אורך X גובה X רוחב
+                    </dd>
+                    <dd>
+                        @(Html.DisplayFor(m => m.Length)) @(Html.DisplayFor(m => m.Height))x @(Html.DisplayFor(m => m.Width))x
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+</div>
+

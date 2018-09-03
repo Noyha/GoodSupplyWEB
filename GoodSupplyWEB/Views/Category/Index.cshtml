@@ -1,0 +1,48 @@
+﻿@model IEnumerable<GoodSupplyWEB.Models.DB.Categories>
+@using GoodSupplyWEB.Models
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    th {
+        text-align: right;
+    }
+</style>
+
+<div class="dir-rtl">
+    <h2>ניהול קטגוריות</h2>
+
+    <p>
+        @Html.Partial("_CreateButtonPartial")
+    </p>
+
+    <table class="table">
+        <tr>
+            <th>
+                קטגוריה
+            </th>
+            <th>
+                קטגורית אב
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parents.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("ערוך", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("מחק", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

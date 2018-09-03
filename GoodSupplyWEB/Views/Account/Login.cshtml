@@ -1,0 +1,48 @@
+﻿@model GoodSupplyWEB.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="dir-rtl">
+    <div class="well well-sm" style="background-color:hsla(15, 82%, 45%,0.8); color: white;">
+        <h2>התחברות</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger", @style = "color:black" })
+
+                <div class="form-group">
+                    @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessage("Email", "", new { @class = "text-danger", @style = "color:black" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessage("Password", "", new { @class = "text-danger", @style = "color:black" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="התחבר" class="btn btn-sm btn-success" />
+                        <a type="button" class="btn btn-info btn-sm" href="@Url.Action("SelectRegister")">
+                            <span>עוד לא נרשמת ?</span>&nbsp;
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
